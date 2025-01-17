@@ -15,7 +15,7 @@ class RepositoryPhotosImpl extends RepositoryPhotos {
             'MyApp/1.0.0 (https://myapp.com)', // Agregar el user agent para que te permita hacer la petición, esto es debido al server que estes utilizando.
       },
     ),
-  ); // Renombrado para mayor claridad
+  ); // Renombrado para mayor claridad/ Renombrado para mayor claridad
   final String _basePhotosUrl =
       'https://api.flickr.com/services/feeds/photos_public.gne'; // URL base de Flickr
 
@@ -27,7 +27,7 @@ class RepositoryPhotosImpl extends RepositoryPhotos {
         queryParameters: {
           'tags': 'priime',
           'format': 'json',
-          'nojsoncallback': '1', // Asegura que el resultado sea JSON puro
+          //'nojsoncall': '1', // Asegura que el resultado sea JSON puro
         },
       );
 
@@ -45,7 +45,7 @@ class RepositoryPhotosImpl extends RepositoryPhotos {
       final Map<String, dynamic> jsonData = jsonDecode(rawResponse);
       final data = PhotosDto.fromJson(jsonData);
 
-      // Convertir los elementos a una lista de PhotosEntity
+      // Procesar la lista de fotos
       final List<PhotosEntity> photos = data.items
               ?.map((item) => PhotosEntity(
                     imageUrl: item.media?.m,
@@ -57,6 +57,7 @@ class RepositoryPhotosImpl extends RepositoryPhotos {
       return photos;
     } catch (e) {
       print('Error desconocido: $e');
+      // Retorna una lista vacía en caso de error
       return [];
     }
   }
